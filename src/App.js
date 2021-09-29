@@ -3,15 +3,21 @@ import Box from "@mui/material/Box"
 import Stepper from "@mui/material/Stepper"
 import Step from "@mui/material/Step"
 import StepLabel from "@mui/material/StepLabel"
-import Button from "@mui/material/Button"
-import Typography from "@mui/material/Typography"
 import { AppBar, Toolbar } from "@mui/material"
 import Login from "./Pages/Login"
 import AuthContextProvider from "./Context/AuthContext";
 import Otp from "./Pages/Otp";
 import CowinCard from "./Pages/CowinCard";
+import Shipping from "./Pages/Shipping";
+import Confirm from "./Pages/Confirm";
 
-const steps = ['Enter Phone Number', 'Enter OTP', 'Download Certificate'];
+const steps = [
+  'Enter Phone Number',
+  'Enter OTP',
+  'Download Certificate',
+  'Enter Address',
+  'Confirm'
+]
 
 const App = () => {
   const [activeStep, setActiveStep] = React.useState(0);
@@ -31,7 +37,17 @@ const App = () => {
 
       case 2:
         return (
-          <CowinCard/>
+          <CowinCard onClick={ handleNext }/>
+        )
+
+      case 3:
+        return (
+          <Shipping onClick={ handleNext }/>
+        )
+
+      case 4:
+        return (
+          <Confirm onClick={ handleReset }/>
         )
 
       default:
@@ -78,27 +94,9 @@ const App = () => {
               );
             }) }
           </Stepper>
-          { activeStep === steps.length ? (
-            <React.Fragment>
-              <Typography sx={ { mt: 2, mb: 1 } }>
-                All steps completed - you&apos;re finished
-              </Typography>
-              <Box sx={ { display: 'flex', flexDirection: 'row', pt: 2 } }>
-                <Box sx={ { flex: '1 1 auto' } }/>
-                <Button onClick={ handleReset }>Reset</Button>
-              </Box>
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              { getContent() }
-              <Box sx={ { display: 'flex', flexDirection: 'row', pt: 2 } }>
-                <Box sx={ { flex: '1 1 auto' } }/>
-                <Button onClick={ handleNext }>
-                  { activeStep === steps.length - 1 ? 'Finish' : null }
-                </Button>
-              </Box>
-            </React.Fragment>
-          ) }
+          <React.Fragment>
+            { getContent() }
+          </React.Fragment>
         </Box>
       </React.Fragment>
     </AuthContextProvider>

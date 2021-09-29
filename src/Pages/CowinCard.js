@@ -2,8 +2,9 @@ import React from "react"
 import Card from "../Components/Card/Card"
 import { CardContent } from "@mui/material"
 import { makeStyles } from "@mui/styles"
+import Control from "../Components/Controls/Control";
 
-const CowinCard = () => {
+const CowinCard = ({ onClick }) => {
 
   const classes = useStyles()
 
@@ -51,6 +52,13 @@ const CowinCard = () => {
           </div>
         </CardContent>
       </Card>
+      <div className={ classes.action }>
+        <Control.Button
+          text="Continue"
+          onClick={ () => onClick() }
+          style={ { width: '25%' } }
+        />
+      </div>
     </div>
   )
 }
@@ -68,6 +76,10 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between'
+  },
+  action: {
+    textAlign: 'center',
+    marginTop: '20px'
   }
 }))
 
