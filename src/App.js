@@ -4,6 +4,7 @@ import Stepper from "@mui/material/Stepper"
 import Step from "@mui/material/Step"
 import StepLabel from "@mui/material/StepLabel"
 import { AppBar, Toolbar } from "@mui/material"
+import { makeStyles } from "@mui/styles"
 import Login from "./Pages/Login"
 import AuthContextProvider from "./Context/AuthContext";
 import Otp from "./Pages/Otp";
@@ -20,6 +21,9 @@ const steps = [
 ]
 
 const App = () => {
+
+  const classes = useStyles()
+
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
 
@@ -80,20 +84,22 @@ const App = () => {
         </AppBar>
         <Toolbar/>
         <Box sx={ { width: '100%', paddingTop: '50px' } }>
-          <Stepper activeStep={ activeStep }>
-            { steps.map((label, index) => {
-              const stepProps = {};
-              const labelProps = {};
-              if (isStepSkipped(index)) {
-                stepProps.completed = false;
-              }
-              return (
-                <Step key={ label } { ...stepProps }>
-                  <StepLabel { ...labelProps }>{ label }</StepLabel>
-                </Step>
-              );
-            }) }
-          </Stepper>
+          <div className={ classes.stepper }>
+            <Stepper activeStep={ activeStep }>
+              { steps.map((label, index) => {
+                const stepProps = {};
+                const labelProps = {};
+                if (isStepSkipped(index)) {
+                  stepProps.completed = false;
+                }
+                return (
+                  <Step key={ label } { ...stepProps }>
+                    <StepLabel { ...labelProps }>{ label }</StepLabel>
+                  </Step>
+                );
+              }) }
+            </Stepper>
+          </div>
           <React.Fragment>
             { getContent() }
           </React.Fragment>
@@ -102,5 +108,13 @@ const App = () => {
     </AuthContextProvider>
   )
 }
+
+const useStyles = makeStyles(() => ({
+  stepper: {
+    '@media (max-width: 600px)': {
+      display: 'none'
+    }
+  }
+}))
 
 export default App

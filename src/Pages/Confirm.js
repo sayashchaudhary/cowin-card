@@ -34,7 +34,10 @@ const Confirm = ({ onClick }) => {
 const useStyles = makeStyles(() => ({
   cowinCard: {
     width: '35%',
-    margin: '5% auto'
+    margin: '5% auto',
+    '@media (max-width: 600px)': {
+      width: '90%'
+    }
   },
   heading: {
     color: '#000066'

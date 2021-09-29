@@ -31,7 +31,7 @@ const CowinCard = ({ onClick }) => {
               <h4>Aadhaar XXXXXXXX0000</h4>
             </div>
             <div className={ classes.details }>
-              <h4>Beneficiary Reference ID</h4>
+              <h4>Beneficiary Reference <br />ID</h4>
               <h4>99999999999</h4>
             </div>
           </div>
@@ -66,7 +66,10 @@ const CowinCard = ({ onClick }) => {
 const useStyles = makeStyles(() => ({
   cowinCard: {
     width: '35%',
-    margin: '5% auto'
+    margin: '5% auto',
+    '@media (max-width: 600px)': {
+      width: '90%'
+    }
   },
   heading: {
     color: '#000066'

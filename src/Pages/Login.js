@@ -15,7 +15,10 @@ const useStyles = makeStyles(() => ({
   card: {
     margin: '0 auto',
     width: '50%',
-    marginTop: '10%'
+    marginTop: '10%',
+    '@media (max-width: 600px)': {
+      width: '90%'
+    }
   },
   cardHeading: {
     textAlign: 'center'
