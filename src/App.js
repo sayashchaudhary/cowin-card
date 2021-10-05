@@ -80,7 +80,7 @@ const App = () => {
     <AuthContextProvider>
       <React.Fragment>
         <AppBar position="fixed">
-          <Toolbar>Cowid Certificate</Toolbar>
+          <Toolbar>Get Your Covid Certificate</Toolbar>
         </AppBar>
         <Toolbar/>
         <Box sx={ { width: '100%', paddingTop: '50px' } }>
