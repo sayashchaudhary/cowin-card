@@ -1,53 +1,53 @@
-import React from "react"
+import React, { useContext, useEffect } from "react"
 import Card from "../Components/Card/Card"
 import { CardContent } from "@mui/material"
 import { makeStyles } from "@mui/styles"
-import Control from "../Components/Controls/Control";
+import Control from "../Components/Controls/Control"
+import { AuthContext } from "../Context/AuthContext"
 
 const CowinCard = ({ onClick }) => {
 
   const classes = useStyles()
 
+  const { GetCovidCertificate, cardData } = useContext(AuthContext)
+
+
+  useEffect(() => {
+    GetCovidCertificate()
+  })
+
+
   return (
     <div className={ classes.cowinCard }>
       <Card>
         <CardContent style={ { padding: '20px' } }>
-          <div>
-            <h3 className={ classes.heading }>Beneficiary Details</h3>
-            <div className={ classes.details }>
-              <h4>Beneficiary Name</h4>
-              <h4>John Doe</h4>
-            </div>
-            <div className={ classes.details }>
-              <h4>Age</h4>
-              <h4>25</h4>
-            </div>
-            <div className={ classes.details }>
-              <h4>Gender</h4>
-              <h4>Male</h4>
-            </div>
-            <div className={ classes.details }>
-              <h4>Id</h4>
-              <h4>Aadhaar XXXXXXXX0000</h4>
-            </div>
-            <div className={ classes.details }>
-              <h4>Beneficiary Reference <br />ID</h4>
-              <h4>99999999999</h4>
-            </div>
-          </div>
-          <div>
-            <h3 className={ classes.heading }>Vaccination Details</h3>
-            <div className={ classes.details }>
-              <h4>Vaccine Name</h4>
-              <h4>Covishield</h4>
-            </div>
-            <div className={ classes.details }>
-              <h4>1st Dose</h4>
-              <h4>25/06/2021</h4>
-            </div>
-            <div className={ classes.details }>
-              <h4>2nd Dose</h4>
-              <h4>03/09/2021</h4>
+          <div className={ classes.content }>
+            <canvas className={ classes.code } id="qr-code"/>
+            <div className={classes.detailWrapper}>
+              <div className={ classes.details }>
+                <h4>Beneficiary Name</h4>
+                <h4 className={classes.detail}>{ cardData && cardData['Beneficiary Name'] }</h4>
+              </div>
+              <div className={ classes.details }>
+                <h4>Age</h4>
+                <h4>{ cardData?.Age }</h4>
+              </div>
+              <div className={ classes.details }>
+                <h4>Gender</h4>
+                <h4>{ cardData?.Gender }</h4>
+              </div>
+              <div className={ classes.details }>
+                <h4>Vaccine Name</h4>
+                <h4>{ cardData && cardData['Vaccine Name'] }</h4>
+              </div>
+              <div className={ classes.details }>
+                <h4>Dose 1</h4>
+                <h4>{ cardData && cardData['Date of Dose 1'] && cardData['Date of Dose 1'].split("(")[0] }</h4>
+              </div>
+              <div className={ classes.details }>
+                <h4>Dose 2</h4>
+                <h4>{ cardData && cardData['Date of Dose 2'] && cardData['Date of Dose 2'].split("(")[0] }</h4>
+              </div>
             </div>
           </div>
         </CardContent>
@@ -65,20 +65,42 @@ const CowinCard = ({ onClick }) => {
 
 const useStyles = makeStyles(() => ({
   cowinCard: {
-    width: '35%',
+    width: '45%',
     margin: '5% auto',
     '@media (max-width: 600px)': {
       width: '90%'
     }
   },
-  heading: {
-    color: '#000066'
-  },
-  details: {
-    width: '100%',
+  content: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    '@media (max-width: 600px)': {
+      flexDirection: 'column'
+    }
+  },
+  code: {
+    width: '35%',
+    border: '1px solid black',
+    height: '300px',
+    '@media (max-width: 600px)': {
+      width: '100%'
+    }
+  },
+  detailWrapper: {
+    width: '50%',
+    '@media (max-width: 600px)': {
+      width: '100%'
+    }
+  },
+  details: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%'
+  },
+  detail: {
+    textAlign: 'right'
   },
   action: {
     textAlign: 'center',

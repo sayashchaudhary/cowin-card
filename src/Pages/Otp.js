@@ -66,6 +66,8 @@ const Otp = ({ onClick }) => {
         if (res.success) {
           resetForm()
           onClick()
+        } else {
+          alert('Wrong otp')
         }
       })
     }

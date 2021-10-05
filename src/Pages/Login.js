@@ -67,6 +67,8 @@ const Login = ({ onClick }) => {
         if (res.success) {
           resetForm()
           onClick()
+        } else {
+          alert('otp already sent')
         }
       })
     }
