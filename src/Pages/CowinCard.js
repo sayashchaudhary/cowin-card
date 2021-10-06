@@ -1,6 +1,4 @@
 import React, { useContext, useEffect, useState } from "react"
-import Card from "../Components/Card/Card"
-import { CardContent } from "@mui/material"
 import { makeStyles } from "@mui/styles"
 import Control from "../Components/Controls/Control"
 import { AuthContext } from "../Context/AuthContext"
@@ -24,43 +22,41 @@ const CowinCard = ({ onClick }) => {
 
   return (
     <>
-      {loading ? (
-        <Spinner />
+      { loading ? (
+        <Spinner/>
       ) : (
-        <div className={ classes.cowinCard }>
-          <Card>
-            <CardContent style={ { padding: '20px' } }>
-              <div className={ classes.content }>
-                <canvas className={ classes.code } id="qr-code"/>
-                <div className={classes.detailWrapper}>
-                  <div className={ classes.details }>
-                    <h4>Beneficiary Name</h4>
-                    <h4 className={classes.detail}>{ cardData && cardData['Beneficiary Name'] }</h4>
-                  </div>
-                  <div className={ classes.details }>
-                    <h4>Age</h4>
-                    <h4>{ cardData?.Age }</h4>
-                  </div>
-                  <div className={ classes.details }>
-                    <h4>Gender</h4>
-                    <h4>{ cardData?.Gender }</h4>
-                  </div>
-                  <div className={ classes.details }>
-                    <h4>Vaccine Name</h4>
-                    <h4>{ cardData && cardData['Vaccine Name'] }</h4>
-                  </div>
-                  <div className={ classes.details }>
-                    <h4>Dose 1</h4>
-                    <h4>{ cardData && cardData['Date of Dose 1'] && cardData['Date of Dose 1'].split("(")[0] }</h4>
-                  </div>
-                  <div className={ classes.details }>
-                    <h4>Dose 2</h4>
-                    <h4>{ cardData && cardData['Date of Dose 2'] && cardData['Date of Dose 2'].split("(")[0] }</h4>
-                  </div>
+        <>
+          <div className={ classes.cowinCard }>
+            <div>
+              <div className={ classes.header }>
+                <h2 className={classes.color}>Vaccination Card</h2>
+                <h2 className={classes.color}>COVID-19</h2>
+              </div>
+              <p>Name</p>
+              <h3 className={classes.color}>
+                { cardData && cardData['Beneficiary Name'] }
+              </h3>
+              <p>Vaccine</p>
+              <h3 className={classes.color}>
+                { cardData && cardData['Vaccine Name'] }
+              </h3>
+              <div className={ classes.dose }>
+                <div>
+                  <p>Dose 1</p>
+                  <h3 className={classes.color}>
+                    { cardData && cardData['Date of Dose 1'] && cardData['Date of Dose 1'].split("(")[0] }
+                  </h3>
+                </div>
+                <div>
+                  <p>Dose 2</p>
+                  <h3 className={classes.color}>
+                    { cardData && cardData['Date of Dose 2'] && cardData['Date of Dose 2'].split("(")[0] }
+                  </h3>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+              <canvas className={ classes.code } id="qr-code"/>
+            </div>
+          </div>
           <div className={ classes.action }>
             <Control.Button
               text="Continue"
@@ -68,8 +64,8 @@ const CowinCard = ({ onClick }) => {
               style={ { width: '25%' } }
             />
           </div>
-        </div>
-      )}
+        </>
+      ) }
     </>
   )
 }
@@ -78,16 +74,26 @@ const useStyles = makeStyles(() => ({
   cowinCard: {
     width: '45%',
     margin: '5% auto',
+    backgroundColor: '#EE626F',
+    borderRadius: '20px',
+    padding: '30px',
     '@media (max-width: 600px)': {
-      width: '90%'
+      width: '80%'
     }
   },
-  content: {
+  header: {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+  dose: {
+    width: '60%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
     '@media (max-width: 600px)': {
-      flexDirection: 'column'
+      width: '80%'
     }
   },
   code: {
@@ -98,24 +104,12 @@ const useStyles = makeStyles(() => ({
       width: '100%'
     }
   },
-  detailWrapper: {
-    width: '50%',
-    '@media (max-width: 600px)': {
-      width: '100%'
-    }
-  },
-  details: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%'
-  },
-  detail: {
-    textAlign: 'right'
-  },
   action: {
     textAlign: 'center',
     marginTop: '20px'
+  },
+  color: {
+    color: '#ffffff'
   }
 }))
 
