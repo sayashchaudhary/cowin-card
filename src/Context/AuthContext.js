@@ -13,7 +13,6 @@ const AuthContextProvider = (props) => {
   const [txnId, setTxnId] = useState('')
   const [authState, setAuthState] = useState(initialState)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [cardData, setCardData] = useState()
 
   const GenerateOtp = async (payload) => {
     try {
@@ -67,7 +66,7 @@ const AuthContextProvider = (props) => {
 
     const convert = await blobToBase64(blob)
 
-    const base64 = await convert.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/)[2].replace(/(\r\n|\n|\r)/gm, "")
+    const base64 = await convert.match(/^data:([A-Za-z-+/]+);base64,(.+)$/)[2].replace(/(\r\n|\n|\r)/gm, "")
     console.log(base64)
     // const confirm = await base64.replace(/^data:text\/[a-z]+;base64,/, "")
 
@@ -112,7 +111,6 @@ const AuthContextProvider = (props) => {
         authState,
         isLoggedIn,
         GetCovidCertificate,
-        cardData
       } }
     >
       { props.children }

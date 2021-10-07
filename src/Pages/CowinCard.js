@@ -16,6 +16,7 @@ const CowinCard = ({ onClick }) => {
 
   useEffect(() => {
     getCertificate()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const getCertificate = async () => {
