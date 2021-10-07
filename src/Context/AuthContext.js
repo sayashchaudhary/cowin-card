@@ -54,34 +54,31 @@ const AuthContextProvider = (props) => {
       console.log(e)
     }
 
-    await axios.get(`https://cdn-api.co-vin.in/api/v2/registration/certificate/public/download?beneficiary_reference_id=${ beneficiary_reference_id }`, {
+    const res = await axios.get(`https://cdn-api.co-vin.in/api/v2/registration/certificate/public/download?beneficiary_reference_id=${ beneficiary_reference_id }`, {
       headers: {
         "Content-Type": "application/pdf",
         "Authorization": `Bearer ${ authState.token }`,
       },
       responseType: 'blob'
-    }).then((res) => {
-      const blobData = res.data
-      let blob = new Blob([blobData], { type: 'text/plain' })
-
-      blobToBase64(blob).then((res) => {
-        const data = res.replace(/^data:application\/[a-z]+;base64,/, "")
-        axios.post('https://pextract.herokuapp.com/v1/GetPDFDetails', {
-          headers: {
-            "Content-Type": "text/plain",
-          },
-          data
-        }).then((response) => {
-          new window.QRious({
-            element: document.getElementById('qr-code'),
-            size: 200,
-            value: response.data.QRCode
-          });
-          setCardData(response.data)
-          console.log(response.data)
-        });
-      })
     })
+
+    const blobData = res.data
+    let blob = new Blob([blobData], { type: 'text/plain' })
+
+    const convert = await blobToBase64(blob)
+
+    const base64 = await convert.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/)[2].replace(/(\r\n|\n|\r)/gm, "")
+    console.log(base64)
+    // const confirm = await base64.replace(/^data:text\/[a-z]+;base64,/, "")
+
+    const response = await axios.post('https://pextract.herokuapp.com/v1/GetPDFDetails', {
+      headers: {
+        "Content-Type": "text/plain",
+      },
+      data: base64
+    })
+
+    return response.data
   }
 
   const ConfirmOtp = async (data) => {

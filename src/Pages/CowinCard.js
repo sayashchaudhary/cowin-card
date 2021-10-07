@@ -9,16 +9,26 @@ const CowinCard = ({ onClick }) => {
   const classes = useStyles()
 
   const [loading, setLoading] = useState(true)
+  const [cardData, setCardData] = useState()
 
-  const { GetCovidCertificate, cardData } = useContext(AuthContext)
+  const { GetCovidCertificate } = useContext(AuthContext)
 
 
   useEffect(() => {
-    GetCovidCertificate().then(() => {
-      setLoading(false)
-    })
-  })
+    getCertificate()
+  }, [])
 
+  const getCertificate = async () => {
+    const res = await GetCovidCertificate()
+    console.log(res)
+    setCardData(res)
+    setLoading(false)
+    new window.QRious({
+      element: document.getElementById('qr-code'),
+      size: 200,
+      value: res.QRCode
+    })
+  }
 
   return (
     <>
@@ -29,27 +39,27 @@ const CowinCard = ({ onClick }) => {
           <div className={ classes.cowinCard }>
             <div>
               <div className={ classes.header }>
-                <h2 className={classes.color}>Vaccination Card</h2>
-                <h2 className={classes.color}>COVID-19</h2>
+                <h2 className={ classes.color }>Vaccination Card</h2>
+                <h2 className={ classes.color }>COVID-19</h2>
               </div>
               <p>Name</p>
-              <h3 className={classes.color}>
+              <h3 className={ classes.color }>
                 { cardData && cardData['Beneficiary Name'] }
               </h3>
               <p>Vaccine</p>
-              <h3 className={classes.color}>
+              <h3 className={ classes.color }>
                 { cardData && cardData['Vaccine Name'] }
               </h3>
               <div className={ classes.dose }>
                 <div>
                   <p>Dose 1</p>
-                  <h3 className={classes.color}>
+                  <h3 className={ classes.color }>
                     { cardData && cardData['Date of Dose 1'] && cardData['Date of Dose 1'].split("(")[0] }
                   </h3>
                 </div>
                 <div>
                   <p>Dose 2</p>
-                  <h3 className={classes.color}>
+                  <h3 className={ classes.color }>
                     { cardData && cardData['Date of Dose 2'] && cardData['Date of Dose 2'].split("(")[0] }
                   </h3>
                 </div>
