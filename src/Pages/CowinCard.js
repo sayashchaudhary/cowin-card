@@ -24,11 +24,11 @@ const CowinCard = ({ onClick }) => {
     console.log(res)
     setCardData(res)
     setLoading(false)
-    new window.QRious({
-      element: document.getElementById('qr-code'),
-      size: 200,
-      value: res.QRCode
-    })
+    // new window.QRious({
+    //   element: document.getElementById('qr-code'),
+    //   size: 200,
+    //   value: res.QRCode
+    // })
   }
 
   return (
@@ -65,7 +65,8 @@ const CowinCard = ({ onClick }) => {
                   </h3>
                 </div>
               </div>
-              <canvas className={ classes.code } id="qr-code"/>
+              {/*<canvas className={ classes.code } id="qr-code"/>*/}
+              <img src={`data:image/png;base64,${cardData.QRCode}`} alt="Qr" />
             </div>
           </div>
           <div className={ classes.action }>
